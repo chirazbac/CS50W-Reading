@@ -1,0 +1,54 @@
+{% extends "books/layout.html" %}
+{% load static %}
+
+{% block body %}
+  {% if user.is_authenticated %}
+  <div class="Container">
+    <div class="Header">
+        <img class="CoverImage" src="{{book.coverUrl}}" alt="Book cover" />
+        <div class="BookDetails">
+            <h1 class="Title">Title : {{book.title}}</h1>
+            <p class="Author">Author: {{book.author}}</p>
+            <p class="Description">
+              {{book.description}}
+            </p>
+            <p class="Goal">Reading Goal: {{book.pages_per_day}} pages per day</p>
+        </div>
+    </div>
+
+    <div class="Schedule">
+        <div class="DayList">
+           {% for task in tasks %}
+                 <div id="task-{{task.id}}" data-task-id="{{ task.id }}" class="DayItem {% if task.date == today %}active{% endif %}">
+                      {{ task.date|date:"l" }}
+                 </div>
+           {% endfor %}
+        </div>
+        <div class="FlexContainer">
+              <div>
+                <div class="DashedLine">
+                     <i class="fa fa-chevron-down Chevron"></i>
+                </div>
+                <div class="DashedLine">
+                     <i class="fa fa-chevron-down Chevron"></i>
+                </div>
+             </div>
+            <div class="ContainerRead">
+                <div class="ReadingTask" id="readingTask">
+                </div>
+                <div class="NotesSection" id="notesSection">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="GifContainer">
+        <img src="" alt="celebration gif" id="celebrationGif" />
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block script %}
+ <script src="{% static 'books/book.js' %}"></script>
+{% endblock %}
